@@ -9,14 +9,12 @@ export const authRequired = (req, res, next) => {
       return res.status(401).json({ message: "No token, access denied" });
     }
 
-    jwt.verify(token, TOKEN_SECRET),
-      (error, user) => {
-        if (error) return res.status(403).json({ message: "Invalid token" });
-        console.log(user);
+    jwt.verify(token, TOKEN_SECRET, (error, user) => {
+      if (error) return res.status(403).json({ message: "Invalid token" });
 
         req.user = user;
         next();
-      };
+      });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
