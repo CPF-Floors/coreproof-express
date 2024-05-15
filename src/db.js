@@ -5,6 +5,6 @@ export const connectDB = async () => {
         await mongoose.connect("mongodb://localhost/coreproof-factory")
         console.log(">>> DB is connected");
     } catch (error) {
-        console.log({error: error.message});
+        console.log(error);
     }
 }
