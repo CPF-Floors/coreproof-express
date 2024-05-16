@@ -19,6 +19,6 @@ const cartSchema = new mongoose.Schema({
     required: true
   },
   items: [cartItemSchema]
-}, { timestamps: true }); // Aquí se activan los timestamps
+}, { timestamps: true });
 
 export default mongoose.model("Cart", cartSchema);
