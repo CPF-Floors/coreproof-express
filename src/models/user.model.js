@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema(
     businessName: {
       type: String,
       required: true,
-
       trim: true,
     },
     phoneNumber: {
@@ -42,6 +41,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["admin", "client", "worker"],
       required: true,
+      default: "client"
     },
   },
   {
