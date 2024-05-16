@@ -24,7 +24,7 @@ export const getUserById = async (req, res) => {
 }
 
 export const getUserByQuery = async (req, res) => {
-    const {query} = req.body
+    const { query } = req.body
 
     try {
         const users = await User.find({

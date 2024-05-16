@@ -13,6 +13,7 @@ const orderSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["Pending", "In process", "Completed"],
+      default: "Pending"
     },
     productList: [
       {
@@ -23,6 +24,7 @@ const orderSchema = new mongoose.Schema(
     estimatedTime: {
       type: Date,
       required: true,
+      default: () => Date.now() + (2 * 7 * 24 * 60 * 60 * 1000)
     },
   },
   {
