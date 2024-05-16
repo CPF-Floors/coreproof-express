@@ -26,7 +26,7 @@ export const addItemsToCart = async (req, res) => {
             cart = new Cart({ user: id, items: [] });
         }
 
-        cart.items.push(item);
+        cart.items.push(item._id);
 
         await cart.save();
 
@@ -48,7 +48,21 @@ export const removeItemsFromCart = async (req, res) => {
 
         await cart.save()
 
-        res.status(204).json({message: "item deleted from cart"}, cart)
+        res.status(204).json({ message: "item deleted from cart" }, cart)
+    } catch (error) {
+        res.status(500).json({ error: "Server error" });
+    }
+}
+
+export const emptyCartAfterOrder = async (req, res) => {
+    const { id } = req.user
+    try {
+        const cart = await Cart.findOne({ user: id })
+
+        cart.items = []
+        cart.save()
+
+        res.status(204).json({ message: "Cart is now empty" }, cart)
     } catch (error) {
         res.status(500).json({ error: "Server error" });
     }
