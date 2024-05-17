@@ -11,7 +11,7 @@ export const getMyCart = async (req, res) => {
         res.status(200).json(cart);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Error en el servidor" });
+        res.status(500).json({ message: "Error en el servidor" }, error);
     }
 };
 
@@ -33,7 +33,7 @@ export const addItemsToCart = async (req, res) => {
         res.status(200).json({ message: "Item added successfully", cart });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({ message: "Error en el servidor" }, error);
     }
 };
 
@@ -50,7 +50,7 @@ export const removeItemsFromCart = async (req, res) => {
 
         res.status(204).json({ message: "item deleted from cart" }, cart)
     } catch (error) {
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({ message: "Error en el servidor" }, error);
     }
 }
 
@@ -64,6 +64,6 @@ export const emptyCartAfterOrder = async (req, res) => {
 
         res.status(204).json({ message: "Cart is now empty" }, cart)
     } catch (error) {
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({ message: "Error en el servidor" }, error);
     }
 }
