@@ -48,7 +48,7 @@ export const login = async (req, res) => {
       email: userFound.email,
     });
   } catch (error) {
-    res.status(500).json({ message: "There is a problem loging your account" });
+    res.status(500).json({ message: "There is a problem logging your account" });
   }
 };
 
