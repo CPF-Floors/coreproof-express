@@ -24,7 +24,7 @@ export const getUserById = async (req, res) => {
 }
 
 export const getUserByQuery = async (req, res) => {
-    const { query } = req.body
+    const { query } = req.query
 
     try {
         const users = await User.find({
@@ -47,7 +47,7 @@ export const deleteUser = async (req, res) => {
         if (!user) {
             res.status(404).json({ message: 'Error al eliminar este usuario' }, error)
         }
-        res.status(204).json({ message: `Usuario ${user.name} eliminado con exito` })
+        res.status(204).json({ message: `Usuario ${user.fullName} eliminado con exito` })
     } catch (error) {
         res.status(500).json({ message: "Error del servidor" }, error)
     }
@@ -73,7 +73,7 @@ export const updateUser = async (req, res) => {
         if (!user) {
             res.status(404).json({ message: 'Error al modificar este usuario' }, error)
         }
-        res.status(200).json({ message: `Usuario ${user.name} modificado con exito` })
+        res.status(200).json({ message: `Usuario ${user.fullName} modificado con exito` })
     } catch (error) {
         res.status(500).json({ message: "Error del servidor" }, error)
     }

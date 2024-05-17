@@ -5,7 +5,7 @@ export const getAllProducts = async (req, res) => {
     const products = await Product.find({});
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    res.status(500).json({ message: "Error en el servidor", error});
   }
 };
 
@@ -14,7 +14,7 @@ export const getVinylProducts = async (req, res) => {
     const products = await Product.find({ material: "Vinyl" });
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    res.status(500).json({ message: "Error en el servidor", error});
   }
 };
 export const getLaminateProducts = async (req, res) => {
@@ -22,17 +22,17 @@ export const getLaminateProducts = async (req, res) => {
     const products = await Product.find({ material: "Laminate" });
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    res.status(500).json({ message: "Error en el servidor", error});
   }
 };
 
 export const getProductById = async (req, res) => {
   const { id } = req.params;
   try {
-    const product = await Product.findbyId(id);
+    const product = await Product.findById({_id: id});
     res.status(200).json(product);
   } catch (error) {
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    res.status(500).json({ message: "Error en el servidor", error});
   }
 };
 
@@ -50,7 +50,7 @@ export const createNewProduct = async (req, res) => {
     await product.save();
     res.status(201).json({ message: "Producto created" });
   } catch (error) {
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    res.status(500).json({ message: "Error en el servidor", error});
   }
 };
 
@@ -70,21 +70,21 @@ export const editProduct = async (req, res) => {
       new: true,
     });
 
-    res.status(200).json({ message: "Product updated succesfully" }, product);
+    res.status(200).json({ message: "Product updated succesfully", product});
   } catch (error) {
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    res.status(500).json({ message: "Error en el servidor", error});
   }
 };
 
 export const deleteProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const product = await Product.findByIdAndDelete(id);
+    const product = await Product.findByIdAndDelete({_id: id});
     res
       .status(204)
-      .json({ message: "Product has been deleted succesfully" }, product);
+      .json({ message: "Product has been deleted succesfully", product});
   } catch (error) {
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    res.status(500).json({ message: "Error en el servidor", error});
   }
 };
 
@@ -98,6 +98,6 @@ export const getProductByQuery = async (req, res) => {
     });
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ error: "Error en el servidor" });
+    res.status(500).json({ message: "Error en el servidor", error});
   }
 };

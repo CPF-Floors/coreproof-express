@@ -13,12 +13,12 @@ import {
 const router = Router()
 
 router.get("/", getAllProducts)
-router.get("/", getProductByQuery)
+router.get("/query", getProductByQuery)
 router.get("/vinyl", getVinylProducts)
 router.get("/laminate", getLaminateProducts)
-router.get("/:id", getProductById)
+router.get("/find/:id", getProductById)
 router.post("/new", createNewProduct)
-router.put("/:id", editProduct)
-router.delete("/:id", deleteProduct)
+router.put("/find/:id", editProduct)
+router.delete("/find/:id", deleteProduct)
 
 export default router
