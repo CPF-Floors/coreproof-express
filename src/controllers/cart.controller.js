@@ -26,7 +26,7 @@ export const addItemsToCart = async (req, res) => {
             cart = new Cart({ user: id, items: [] });
         }
 
-        cart.items.push(item._id);
+        cart.items.push(item.id);
 
         await cart.save();
 

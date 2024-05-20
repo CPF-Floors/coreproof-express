@@ -81,12 +81,19 @@ export const createNewOrder = async (req, res) => {
     try {
         const { id } = req.user;
 
-        const cart = await Cart.findOne({ user: id });
+        const cart = await Cart.findOne({ user: id }).populate('items.product');
         if (!cart) {
             return res.status(404).json({ error: "Cart not found" });
         }
 
-        const items = cart.items.map(item => item.product);
+        if (cart.items.length === 0) {
+            return res.status(400).json({ error: "Cart is empty" });
+        }
+
+        const items = cart.items.map(item => ({
+            product: item.product,
+            quantity: item.quantity
+        }));
 
         const order = await Order.create({
             client: id,
@@ -102,6 +109,7 @@ export const createNewOrder = async (req, res) => {
         res.status(500).json({ error: "Error en el servidor" });
     }
 };
+
 
 export const deleteOrder = async (req, res) => {
     const { id } = req.params
