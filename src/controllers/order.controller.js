@@ -1,6 +1,9 @@
 import Order from "../models/order.model.js";
 import Cart from "../models/cart.model.js";
 import { getUserFromToken } from "../libs/getUser.js";
+import Queue from "../libs/queue.js";
+
+const orderQueue = new Queue()
 
 export const getAllOrders = async (req, res) => {
   try {
@@ -101,6 +104,8 @@ export const createNewOrder = async (req, res) => {
       client: id,
       productList: items,
     });
+
+    orderQueue.enqueue(order)
 
     res.status(201).json({
       message: "Order created successfully",

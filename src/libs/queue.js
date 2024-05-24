@@ -1,31 +1,35 @@
-export default function Queue() {
-  let items = [];
+class Queue {
+  constructor() {
+    this.items = [];
+  }
 
-  this.enqueue = (element) => {
-    items.push(element);
-  };
+  enqueue(element) {
+    this.items.push(element);
+  }
 
-  this.dequeue = () => {
-    return items.shift();
-  };
+  dequeue() {
+    return this.items.shift();
+  }
 
-  this.front = () => {
-    return items[0];
-  };
+  front() {
+    return this.items[0];
+  }
 
-  this.HasElements = () => {
-    return items.length > 0;
-  };
+  hasElements() {
+    return this.items.length > 0;
+  }
 
-  this.size = () => {
-    return items.length;
-  };
+  size() {
+    return this.items.length;
+  }
 
-  this.print = () => {
-    return items.toString();
-  };
+  print() {
+    return this.items.toString();
+  }
 
-  this.clear = () => {
-    items = [];
-  };
+  clear() {
+    this.items = [];
+  }
 }
+
+export default Queue;
