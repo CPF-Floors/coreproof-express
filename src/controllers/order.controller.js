@@ -1,9 +1,9 @@
 import Order from "../models/order.model.js";
 import Cart from "../models/cart.model.js";
 import { getUserFromToken } from "../libs/getUser.js";
-import Queue from "../libs/queue.js";
+//import Queue from "../libs/queue.js";
 
-const orderQueue = new Queue()
+//const orderQueue = new Queue()
 
 export const getAllOrders = async (req, res) => {
   try {
@@ -105,7 +105,7 @@ export const createNewOrder = async (req, res) => {
       productList: items,
     });
 
-    orderQueue.enqueue(order)
+    //orderQueue.enqueue(order)
 
     res.status(201).json({
       message: "Order created successfully",
@@ -121,8 +121,13 @@ export const deleteOrder = async (req, res) => {
   const { id } = req.params;
   try {
     const order = await Order.findByIdAndDelete(id);
-    res.status(201).json({ message: "Order deleted succesfully" }, order);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    res.status(200).json({ message: "Order deleted successfully", order });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Error en el servidor" });
   }
 };
+

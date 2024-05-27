@@ -13,7 +13,7 @@ export const getMyCart = async (req, res) => {
     res.status(200).json(cart);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    res.status(500).json({ message: "Error en el servidor", error });
   }
 };
 
@@ -28,16 +28,22 @@ export const addItemsToCart = async (req, res) => {
       cart = new Cart({ user: id, items: [] });
     }
 
-    cart.items.push(item.id);
+    const existingItem = cart.items.find(cartItem => cartItem.product.toString() === item.id);
+    if (existingItem) {
+      existingItem.quantity += item.quantity || 1;
+    } else {
+      cart.items.push({ product: item.id, quantity: item.quantity || 1 });
+    }
 
     await cart.save();
 
     res.status(200).json({ message: "Item added successfully", cart });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    res.status(500).json({ message: "Error en el servidor", error });
   }
 };
+
 
 export const removeItemsFromCart = async (req, res) => {
   try {
@@ -46,17 +52,23 @@ export const removeItemsFromCart = async (req, res) => {
     const { item } = req.body;
     let cart = await Cart.findOne({ user: id });
 
+    if (!cart) {
+      return res.status(404).json({ error: "Carrito no encontrado" });
+    }
+
     cart.items = cart.items.filter(
-      (cartItem) => cartItem._id.toString() !== item._id
+      (cartItem) => cartItem.product.toString() !== item.id
     );
 
     await cart.save();
 
-    res.status(204).json({ message: "item deleted from cart" }, cart);
+    res.status(200).json({ message: "Item deleted from cart", cart });
   } catch (error) {
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    console.error(error);
+    res.status(500).json({ message: "Error en el servidor", error });
   }
 };
+
 
 export const emptyCartAfterOrder = async (req, res) => {
   try {
@@ -64,11 +76,16 @@ export const emptyCartAfterOrder = async (req, res) => {
     const { id } = req.user;
     const cart = await Cart.findOne({ user: id });
 
-    cart.items = [];
-    cart.save();
+    if (!cart) {
+      return res.status(404).json({ error: "Carrito no encontrado" });
+    }
 
-    res.status(204).json({ message: "Cart is now empty" }, cart);
+    cart.items = [];
+    await cart.save();
+
+    res.status(200).json({ message: "Cart is now empty", cart });
   } catch (error) {
-    res.status(500).json({ message: "Error en el servidor" }, error);
+    console.error(error);
+    res.status(500).json({ message: "Error en el servidor", error });
   }
 };
