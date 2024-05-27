@@ -34,6 +34,7 @@ export const getUserByQuery = async (req, res) => {
         const users = await User.find({
             $or: [
                 { fullName: { $regex: query, $options: 'i' } },
+                { email: { $regex: query, $options: 'i' } },
                 { businessName: { $regex: query, $options: 'i' } }
             ]
         });

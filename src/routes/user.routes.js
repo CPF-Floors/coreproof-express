@@ -10,7 +10,7 @@ import {
 const router = Router();
 
 router.get("/", getAllUsers);
-router.get("/", getUserByQuery);
+router.get("/query", getUserByQuery);
 router.get("/:id", getUserById);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
