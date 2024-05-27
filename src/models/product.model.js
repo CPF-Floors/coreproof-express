@@ -6,6 +6,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    img: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       enum: ["Floor", "Step", "Molding", "Baseboard", "Underlayment"],

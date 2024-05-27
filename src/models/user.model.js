@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    img: {
+      type: String,
+      required: true
+    },
     address: {
       type: String,
       required: true,

@@ -62,7 +62,7 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     const { id } = req.params
-    const { fullName, address, businessName, phoneNumber, email, password } = req.body
+    const { fullName, img, address, businessName, phoneNumber, email, password } = req.body
     try {
         let newPassword;
         if (password) {
@@ -70,6 +70,7 @@ export const updateUser = async (req, res) => {
         }
         const updatedData = {
             ...fullName && { fullName: fullName },
+            ...img && { img: img },
             ...address && { address: address },
             ...businessName && { businessName: businessName },
             ...phoneNumber && { phoneNumber: phoneNumber },

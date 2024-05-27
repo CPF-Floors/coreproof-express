@@ -37,10 +37,11 @@ export const getProductById = async (req, res) => {
 };
 
 export const createNewProduct = async (req, res) => {
-  const { name, productType, material, description, price } = req.body;
+  const { name, img, productType, material, description, price } = req.body;
   try {
     const product = new Product({
       name: name,
+      img: img,
       productType: productType,
       material: material,
       description: description,
@@ -56,10 +57,11 @@ export const createNewProduct = async (req, res) => {
 
 export const editProduct = async (req, res) => {
   const { id } = req.params;
-  const { name, productType, material, description, price } = req.body;
+  const { name, img, productType, material, description, price } = req.body;
   try {
     const updateProduct = {
       ...(name && { name: name }),
+      ...(img && { img: img }),
       ...(productType && { productType: productType }),
       ...(material && { material: material }),
       ...(description && { description: description }),
