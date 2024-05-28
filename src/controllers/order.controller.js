@@ -81,7 +81,7 @@ export const changeStatusToCompleted = async (req, res) => {
   }
 };
 
-export const createNewOrder = async (req, res) => {
+/* export const createNewOrder = async (req, res) => {
   try {
     await getUserFromToken(req);
     const { id } = req.user;
@@ -115,7 +115,49 @@ export const createNewOrder = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Error en el servidor" });
   }
+}; */
+
+export const createNewOrder = async (req, res) => {
+  try {
+
+    await getUserFromToken(req);
+    const { id } = req.user;
+    const { cartId } = req.params;
+    console.log("User ID:", id);
+    console.log("Cart ID:", cartId);
+
+    const cart = await Cart.findOne({ _id: cartId }).populate("items.product");
+    console.log("Cart:", cart);
+    if (!cart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+
+    if (cart.items.length === 0) {
+      return res.status(400).json({ error: "Cart is empty" });
+    }
+
+    const items = cart.items.map((item) => ({
+      product: item.product._id,
+      quantity: item.quantity,
+    }));
+    console.log("Items for Order:", items);
+
+    const order = await Order.create({
+      client: id,
+      productList: items,
+    });
+    console.log("Order Created:", order);
+
+    res.status(201).json({
+      message: "Order created successfully",
+      order: order,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error en el servidor" });
+  }
 };
+
 
 export const deleteOrder = async (req, res) => {
   const { id } = req.params;
