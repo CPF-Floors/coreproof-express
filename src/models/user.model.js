@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     img: {
-      data: Buffer,
-      contentType: String
+      type: String,
+      required: true
     },
     address: {
       type: String,
