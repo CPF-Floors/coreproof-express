@@ -3,19 +3,23 @@ import bcrypt from "bcrypt";
 import { createAccessToken } from "../libs/jwt.js";
 
 export const register = async (req, res) => {
-  const { img, email, password, fullName, address, business, phone } = req.body;
+  const { email, password, fullName, address, businessName, phoneNumber } = req.body;
+  const img = req.file;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
       fullName: fullName,
-      img: img,
+      img: {
+        data: img.buffer,
+        contentType: img.mimetype
+      },
       email: email,
       address: address,
-      businessName: business,
+      businessName: businessName,
       password: hashedPassword,
-      phoneNumber: phone
+      phoneNumber: phoneNumber
     });
 
     const userSaved = await newUser.save();
@@ -27,9 +31,7 @@ export const register = async (req, res) => {
       email: userSaved.email,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "There is a problem registering your account" });
+    res.status(500).json({ message: "There is a problem registering your account" });
   }
 };
 
