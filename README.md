@@ -40,7 +40,7 @@ GET ----> http://localhost/order/pending --> Trae Todas las Órdenes Pendientes
 GET ----> http://localhost/order/in-process --> Trae Todas las Órdenes en Proceso
 GET ----> http://localhost/order/completed --> Trae Todas las Órdenes Completadas
 GET ----> http://localhost/order/user/:id --> Trae las Órdenes de un Usuario Específico
-POST ----> http://localhost/order/add --> Crea una Nueva Orden
+POST ----> http://localhost/order/new/:cartId --> Crea una Nueva Orden
 PATCH ----> http://localhost/order/status/c/:id --> Cambia el Estado de una Orden a Completada
 PATCH ----> http://localhost/order/status/p/:id --> Cambia el Estado de una Orden a En Proceso
 DELETE ----> http://localhost/order/delete/:id --> Elimina una Orden Existente
